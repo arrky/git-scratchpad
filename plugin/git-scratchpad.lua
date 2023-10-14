@@ -4,9 +4,9 @@ end
 
 vim.g.loaded_git_scratchpad = 1
 
-local is_inside_work_tree = vim.fn.system("git rev-parse --is-inside-work-tree")
+local is_inside_work_tree = vim.fn.system("git rev-parse --is-inside-work-tree | tr -d '\n'")
 
-if not is_inside_work_tree then
+if is_inside_work_tree == "false" then
   return
 end
 
