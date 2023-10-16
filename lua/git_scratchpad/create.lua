@@ -11,7 +11,6 @@ function M.new_note()
     return
   end
 
-  -- maybe only create a directory after the user calls one of the commands
   if vim.fn.isdirectory(scratchpad_dir) == 0 then
     vim.fn.mkdir(scratchpad_dir, "p")
 
@@ -21,7 +20,6 @@ function M.new_note()
   local scratch_file = io.open(note_path, "a")
 
   if scratch_file then
-    scratch_file:write("ok!")
     scratch_file:close()
     vim.cmd(":e " .. note_path)
   end
