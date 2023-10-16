@@ -1,0 +1,15 @@
+local git_scratchpad = require("git_scratchpad")
+local create = require("git_scratchpad.create")
+local utils = require("git_scratchpad.utils")
+
+describe("init", function()
+  it("should have a new_note function", function()
+    assert.is_not_nil(git_scratchpad.new_note)
+  end)
+end)
+
+describe("utils", function()
+  it("should give the correct note's path", function()
+    assert.are.same(utils.get_note_path(".scratchpad"), ".scratchpad/scratch.md")
+  end)
+end)
