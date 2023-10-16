@@ -1,6 +1,5 @@
 local M = {}
 
-local notify = require("notify")
 
 
 local absolute_git_dir = vim.fn.system("git rev-parse --absolute-git-dir | tr -d '\n'")
@@ -20,7 +19,6 @@ local function gitExcludeScratchpad()
   if exclude_file then
     exclude_file:write(".scratchpad/*")
     exclude_file:close()
-    notify("scratchpad added to .git/info/exclude!")
   end
 end
 
@@ -36,7 +34,6 @@ function M.new_note()
   -- maybe only create a directory after the user calls one of the commands
   if vim.fn.isdirectory(scratchpad_dir) == 0 then
     vim.fn.mkdir(scratchpad_dir, "p")
-    notify("scratchpad directory created!")
 
     gitExcludeScratchpad()
   end
