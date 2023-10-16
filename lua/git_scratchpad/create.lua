@@ -1,33 +1,13 @@
+local utils = require("git_scratchpad.utils")
+
 local M = {}
 
-
-
-local absolute_git_dir = vim.fn.system("git rev-parse --absolute-git-dir | tr -d '\n'")
-absolute_git_dir = vim.fn.fnamemodify(absolute_git_dir, ":p")
-
-local git_toplevel = vim.fn.system("git rev-parse --show-toplevel | tr -d '\n'")
-git_toplevel = vim.fn.fnamemodify(git_toplevel, ":p")
-
-local scratchpad_dir = git_toplevel .. ".scratchpad"
-
-
-local function gitExcludeScratchpad()
-  local git_exclude_path = absolute_git_dir .. "info/exclude"
-
-  local exclude_file = io.open(git_exclude_path, "a")
-
-  if exclude_file then
-    exclude_file:write(".scratchpad/*")
-    exclude_file:close()
-  end
-end
-
-
 function M.new_note()
-  local note_path = scratchpad_dir .. "/scratch.md"
+  local scratchpad_dir = utils.get_scratchpad_dir()
+  local note_path = utils.get_note_path(scratchpad_dir)
 
   if vim.fn.filereadable(note_path) == 1 then
-    vim.cmd(":e " .. note_path)
+    utils.vim_open_file(note_path)
     return
   end
 
@@ -35,7 +15,7 @@ function M.new_note()
   if vim.fn.isdirectory(scratchpad_dir) == 0 then
     vim.fn.mkdir(scratchpad_dir, "p")
 
-    gitExcludeScratchpad()
+    utils.gitExcludeScratchpad()
   end
 
   local scratch_file = io.open(note_path, "a")
