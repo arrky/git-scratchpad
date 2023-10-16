@@ -13,7 +13,7 @@ end
 
 -- user commands
 
-local new_note = require("git-scratchpad").new_note
+local new_note = require("git_scratchpad").new_note
 
 vim.api.nvim_create_user_command("GitScratchpad", function(args)
   if new_note then

@@ -1,4 +1,4 @@
-local create = require("git-scratchpad.create")
+local create = require("git_scratchpad.create")
 
 local M = {}
 
