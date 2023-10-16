@@ -15,7 +15,7 @@ end
 
 local new_note = require("git_scratchpad").new_note
 
-vim.api.nvim_create_user_command("GitScratchpad", function(args)
+vim.api.nvim_create_user_command("GitScratchpad", function()
   if new_note then
     new_note()
   end
