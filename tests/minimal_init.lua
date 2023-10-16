@@ -13,4 +13,5 @@ vim.opt.rtp:append(".")
 vim.opt.rtp:append(plenary_dir)
 
 vim.cmd("runtime plugin/plenary.vim")
+vim.cmd("runtime plugin/git_scratchpad")
 require("plenary.busted")
