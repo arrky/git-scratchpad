@@ -2,9 +2,9 @@ local utils = require("git_scratchpad.utils")
 
 local M = {}
 
-function M.new_note()
+local function createNote(filetype)
   local scratchpad_dir = utils.get_scratchpad_dir()
-  local note_path = utils.get_note_path(scratchpad_dir)
+  local note_path = utils.get_note_path(scratchpad_dir, filetype)
 
   if utils.file_is_readable(note_path) then
     utils.vim_open_file(note_path)
@@ -13,7 +13,6 @@ function M.new_note()
 
   if not utils.is_directory(scratchpad_dir) then
     vim.fn.mkdir(scratchpad_dir, "p")
-
     utils.gitExcludeScratchpad()
   end
 
@@ -23,6 +22,21 @@ function M.new_note()
     scratch_file:close()
     utils.vim_open_file(note_path)
   end
+end
+
+local function selectFiletypeThen(callback)
+  vim.ui.select({ 'md', 'js', 'lua', 'py', 'sh', 'go' }, {
+    prompt = 'Select filetype:',
+    format_item = function(item)
+      return item
+    end,
+  }, function(filetype)
+    callback(filetype)
+  end)
+end
+
+function M.new_note()
+  selectFiletypeThen(createNote)
 end
 
 return M

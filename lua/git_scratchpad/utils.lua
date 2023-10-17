@@ -24,8 +24,8 @@ function M.get_scratchpad_dir(parent_dir)
   return parent_dir .. ".scratchpad"
 end
 
-function M.get_note_path(scratchpad_dir)
-  return scratchpad_dir .. "/scratch.md"
+function M.get_note_path(scratchpad_dir, filetype)
+  return scratchpad_dir .. "/scratch." .. filetype
 end
 
 function M.vim_open_file(file_path)
