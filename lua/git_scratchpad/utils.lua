@@ -32,6 +32,18 @@ function M.vim_open_file(file_path)
   vim.cmd(":e " .. file_path)
 end
 
+function M.file_is_readable(path)
+  if vim.fn.filereadable(path) == 1 then
+    return true
+  end
+end
+
+function M.is_directory(path)
+  if vim.fn.isdirectory(path) == 1 then
+    return true
+  end
+end
+
 function M.gitExcludeScratchpad()
   local git_exclude_path = get_git_exclude_file_path()
   local exclude_file = io.open(git_exclude_path, "a+")
