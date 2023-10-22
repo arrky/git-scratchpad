@@ -4,6 +4,11 @@ local M = {}
 
 local function createNote(filetype)
   local scratchpad_dir = utils.get_scratchpad_dir()
+
+  if not scratchpad_dir then
+    return
+  end
+
   local note_path = utils.get_note_path(scratchpad_dir, filetype)
 
   if utils.file_is_readable(note_path) then
@@ -31,7 +36,9 @@ local function selectFiletypeThen(callback)
       return item
     end,
   }, function(filetype)
-    callback(filetype)
+    if filetype then
+      callback(filetype)
+    end
   end)
 end
 
