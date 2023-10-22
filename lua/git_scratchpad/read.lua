@@ -1,0 +1,45 @@
+local utils = require("git_scratchpad.utils")
+
+local M = {}
+
+function sortByLastModifiedDescending(dir, files)
+  table.sort(files, function(a, b)
+    return vim.fn.getftime(dir .. "/" .. a) >
+        vim.fn.getftime(dir .. "/" .. b)
+  end)
+
+  if files then
+    return files
+  end
+end
+
+function M.open_note()
+  local scratchpad_dir = utils.get_scratchpad_dir()
+
+  if not scratchpad_dir then
+    return
+  end
+
+  local files = {}
+
+  local dir_list = vim.fn.readdir(scratchpad_dir)
+
+  for _, file in ipairs(dir_list) do
+    files[#files + 1] = file
+  end
+
+  files = sortByLastModifiedDescending(scratchpad_dir, files)
+
+  vim.ui.select(files, {
+    prompt = "Select scratchpad files",
+    format_item = function(item)
+      return item
+    end,
+  }, function(chosenFile)
+    if chosenFile then
+      vim.cmd(":e " .. scratchpad_dir .. "/" .. chosenFile)
+    end
+  end)
+end
+
+return M
