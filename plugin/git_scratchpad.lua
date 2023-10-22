@@ -14,19 +14,26 @@ end
 -- user commands
 
 local new_note = require("git_scratchpad").new_note
+local open_note = require("git_scratchpad").open_note
 
-vim.api.nvim_create_user_command("GitScratchpad", function()
+vim.api.nvim_create_user_command("GitScratchpadNew", function()
   if new_note then
     new_note()
   end
 end, {})
 
+vim.api.nvim_create_user_command("GitScratchpadOpen", function()
+  if open_note then
+    open_note()
+  end
+end, {})
 
 -- keymaps
 
 local buf = vim.api.nvim_get_current_buf()
 
-local new_note_shortcut = { modes = { "n", "i", "v", "x" }, shortcut = "<leader>sn" }
+local new_note_shortcut = { modes = { "n", "v" }, shortcut = "<leader>sn" }
+local open_note_shortcut = { modes = { "n", "v" }, shortcut = "<leader>so" }
 
 vim.keymap.set(new_note_shortcut.modes, new_note_shortcut.shortcut, new_note, {
   noremap = true,
@@ -34,4 +41,12 @@ vim.keymap.set(new_note_shortcut.modes, new_note_shortcut.shortcut, new_note, {
   nowait = true,
   buffer = buf,
   desc = "Create a new git scrathpad note",
+})
+
+vim.keymap.set(open_note_shortcut.modes, open_note_shortcut.shortcut, open_note, {
+  noremap = true,
+  silent = true,
+  nowait = true,
+  buffer = buf,
+  desc = "Open an existing git scrathpad note",
 })
