@@ -2,7 +2,7 @@ local utils = require("git_scratchpad.utils")
 
 local M = {}
 
-function sortByLastModifiedDescending(dir, files)
+local function sortByLastModifiedDescending(dir, files)
   table.sort(files, function(a, b)
     return vim.fn.getftime(dir .. "/" .. a) >
         vim.fn.getftime(dir .. "/" .. b)
