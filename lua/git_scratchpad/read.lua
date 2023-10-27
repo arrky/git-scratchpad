@@ -13,13 +13,7 @@ function sortByLastModifiedDescending(dir, files)
   end
 end
 
-function M.open_note()
-  local scratchpad_dir = utils.get_scratchpad_dir()
-
-  if not scratchpad_dir then
-    return
-  end
-
+local function getScratchpadFiles(scratchpad_dir)
   local files = {}
 
   local dir_list = vim.fn.readdir(scratchpad_dir)
@@ -28,7 +22,17 @@ function M.open_note()
     files[#files + 1] = file
   end
 
-  files = sortByLastModifiedDescending(scratchpad_dir, files)
+  return sortByLastModifiedDescending(scratchpad_dir, files)
+end
+
+function M.open_note()
+  local scratchpad_dir = utils.get_scratchpad_dir()
+
+  if not scratchpad_dir then
+    return
+  end
+
+  local files = getScratchpadFiles(scratchpad_dir)
 
   vim.ui.select(files, {
     prompt = "Select scratchpad files",
