@@ -28,6 +28,19 @@ function M.get_note_path(scratchpad_dir, filetype)
   return scratchpad_dir .. "/scratch." .. filetype
 end
 
+function M.vim_select(items)
+  vim.ui.select(items, {
+    prompt = "Select scratchpad files",
+    format_item = function(item)
+      return item
+    end,
+  }, function(selected)
+    if selected then
+      return selected
+    end
+  end)
+end
+
 function M.vim_open_file(file_path)
   vim.cmd(":e " .. file_path)
 end
