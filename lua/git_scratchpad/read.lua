@@ -46,4 +46,18 @@ function M.open_note()
   end)
 end
 
+function M.open_recent()
+  local scratchpad_dir = utils.get_scratchpad_dir()
+
+  if not scratchpad_dir then
+    return
+  end
+
+  local files = getScratchpadFiles(scratchpad_dir)
+
+  if files then
+    utils.vim_open_file(scratchpad_dir .. "/" .. files[1])
+  end
+end
+
 return M
