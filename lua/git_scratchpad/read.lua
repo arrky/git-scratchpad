@@ -34,16 +34,11 @@ function M.open_note()
 
   local files = getScratchpadFiles(scratchpad_dir)
 
-  vim.ui.select(files, {
-    prompt = "Select scratchpad files",
-    format_item = function(item)
-      return item
-    end,
-  }, function(chosenFile)
-    if chosenFile then
-      vim.cmd(":e " .. scratchpad_dir .. "/" .. chosenFile)
-    end
-  end)
+  local selected = utils.vim_select(files)
+
+  if selected then
+    utils.vim_open_file(scratchpad_dir .. "/" .. selected)
+  end
 end
 
 function M.open_recent()
