@@ -63,13 +63,13 @@ function M.gitExcludeScratchpad()
 
   if exclude_file then
     for line in exclude_file:lines() do
-      local search = line:match("^%.scratchpad/%*")
+      local search = line:match("^%.scratchpad/")
       if search then
         return nil
       end
     end
 
-    exclude_file:write("\n.scratchpad/*")
+    exclude_file:write("\n.scratchpad/")
     exclude_file:close()
   end
 end
