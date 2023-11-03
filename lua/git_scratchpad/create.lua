@@ -16,9 +16,10 @@ local function createNote(filetype)
     return
   end
 
+  utils.gitExcludeScratchpad()
+
   if not utils.is_directory(scratchpad_dir) then
     vim.fn.mkdir(scratchpad_dir, "p")
-    utils.gitExcludeScratchpad()
   end
 
   local scratch_file = io.open(note_path, "a")
