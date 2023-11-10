@@ -1,13 +1,13 @@
 local M = {}
 
 local function get_absolute_git_dir_path()
-  local absolute_git_dir = vim.fn.system("git rev-parse --absolute-git-dir | tr -d '\n'")
+  local absolute_git_dir = vim.fn.system("git rev-parse --absolute-git-dir 2>/dev/null | tr -d '\n'")
   absolute_git_dir = vim.fn.fnamemodify(absolute_git_dir, ":p")
   return absolute_git_dir
 end
 
 local function get_git_toplevel_path()
-  local git_toplevel = vim.fn.system("git rev-parse --show-toplevel | tr -d '\n'")
+  local git_toplevel = vim.fn.system("git rev-parse --show-toplevel 2>/dev/null | tr -d '\n'")
   git_toplevel = vim.fn.fnamemodify(git_toplevel, ":p")
   return git_toplevel
 end
